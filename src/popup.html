@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimmmer</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="brik.css">
+</head>
+
+<body class="color-white pt-sm gap-sm" style="background-color: black;">
+    <div class="flex px-sm">
+        <h1 class="text-lg">Bear Tab Dimmmer</h1>
+    </div>
+
+    <!-- Interruptor Global On/Off -->
+    <div class="flex px-sm flex-row w-full items-center justify-between pb-sm">
+        <label for="globalToggle" class="font-semibold">On/Off</label>
+        <label class="switch">
+            <input type="checkbox" id="globalToggle">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <p id="tabNotCompatible" class="hidden px-sm flex flex-col items-center justify-center p-lg font-semibold gap-xs text-sm text-center text-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m376-400 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
+      This tab is not compatible with Bear Tab Dimmmer.
+    </p>
+    
+    <div id="mainControls" class="flex flex-col gap-md">
+
+
+      <div class="flex flex-col gap-sm w-full px-sm">
+          <label class="pt-xs" for="favcolor">Overlay Color</label>
+        <div id="colorPreview" class="color-button"></div>
+          <div class="color-picker-popup" id="colorPopup">
+            <div class="picker">
+              <div class="color-box" id="colorBox">
+                <div class="white-gradient"></div>
+                <div class="black-gradient"></div>
+                <div class="color-selector" id="svSelector"></div>
+              </div>
+
+              <div class="hue-slider" id="hueSlider">
+                <div class="hue-indicator" id="hueIndicator"></div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="flex flex-col gap-sm w-full px-sm">
+          <label for="opacitySlider">Overlay Opacity</label>
+          <div class="flex items-end flex-col gap-xs">
+              <input class="bg-black cursor-pointer rounded-full" style="height: 8px;" type="range" id="opacitySlider"
+                  min="0" max="100" value="30">
+              <div id="opacityValue">30%</div>
+          </div>
+
+      </div>
+      <div class="flex flex-col gap-0 w-full">
+          <div class="flex px-sm flex-row justify-between items-center w-full">
+            <label>Preset Filters</label>
+            <button id="createPreset" style="background-color: #232323;" class="rounded-full flex flex-row items-center justify-center gap-xxs ps-xs p-xxs cursor-pointer">
+              Add Preset <svg width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="white"><path d="M440-440H240q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h200v-200q0-17 11.5-28.5T480-760q17 0 28.5 11.5T520-720v200h200q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H520v200q0 17-11.5 28.5T480-200q-17 0-28.5-11.5T440-240v-200Z"/></svg>                </button>
+          </div>
+          <div style="overflow-x: auto; overflow-y: visible; padding-top: 5px; padding-bottom: 5px;white-space: nowrap;" id="presetsContainer" class="no-scrollbar leftFeatherMask rightFeatherMask ps-sm flex flex-row gap-xs">
+              
+          </div>
+
+      </div>
+      
+    </div>
+
+    <div class="flex flex-row w-full items-end gap-xs text-xxs pt-sm">
+
+        <div class="flex flex-row gap-xs pb-2xl px-sm">
+            <a class="access w-full hover-underline gap-xxs rounded-lg color-white text-xxs font-semibold decoration-none flex flex-row items-center"
+                target="_blank" href="https://ko-fi.com/dfralan">
+                <p>Coffee</p><img class="aspect-auto animate-bounce" style="width: 15px;" src="ko-fi.png" alt="">
+                
+            </a>
+            <a class="access w-full hover-underline gap-xxs rounded-lg color-white text-xxs font-semibold decoration-none flex flex-row items-center"
+                target="_blank" href="https://github.com/dfralan">
+                
+                <p>Github</p><svg class="aspect-auto animate-bounce" fill="white" height="15px" aria-hidden="true" viewBox="0 0 24 24" version="1.1" data-view-component="true"
+                    class="octicon octicon-mark-github v-align-middle">
+                    <path
+                        d="M12.5.75C6.146.75 1 5.896 1 12.25c0 5.089 3.292 9.387 7.863 10.91.575.101.79-.244.79-.546 0-.273-.014-1.178-.014-2.142-2.889.532-3.636-.704-3.866-1.35-.13-.331-.69-1.352-1.18-1.625-.402-.216-.977-.748-.014-.762.906-.014 1.553.834 1.769 1.179 1.035 1.74 2.688 1.25 3.349.948.1-.747.402-1.25.733-1.538-2.559-.287-5.232-1.279-5.232-5.678 0-1.25.445-2.285 1.178-3.09-.115-.288-.517-1.467.115-3.048 0 0 .963-.302 3.163 1.179.92-.259 1.897-.388 2.875-.388.977 0 1.955.13 2.875.388 2.2-1.495 3.162-1.179 3.162-1.179.633 1.581.23 2.76.115 3.048.733.805 1.179 1.825 1.179 3.09 0 4.413-2.688 5.39-5.247 5.678.417.36.776 1.05.776 2.128 0 1.538-.014 2.774-.014 3.162 0 .302.216.662.79.547C20.709 21.637 24 17.324 24 12.25 24 5.896 18.854.75 12.5.75Z">
+                    </path>
+                </svg>
+            </a>
+            
+        </div>
+
+        <div class="flex h-fit w-full items-end justify-end pe-sm relative">
+            <img onmouseover="this.style.transform='scale(1.1)';" style="height: 100px;" src="bear.svg" alt="Bear Tab Dimmer">
+            <div id="bearOverlay" style="background-color: rgba(0, 0, 0, 0.3);"
+                class="shadow-md transition-all absolute bottom-0 w-full h-full right-0">
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="fixed bottom-0 left-0 leftFeatherMask rightFeatherMask w-screen">
+        <div class="marquee ">
+            <div class="track text-xxs">
+                <small class="text">
+                <b>⚠ Warning & Advisory</b> • This extension is recommended for use with IPS screens or similar technology. It is not a substitute for professional health advice.
+                </small>
+                <small class="text" aria-hidden="true">
+                <b>⚠ Warning & Advisory</b> • This extension is recommended for use with IPS screens or similar technology. It is not a substitute for professional health advice.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script> <!-- Link to your JavaScript file -->
+
+</body>
+
+</html>
