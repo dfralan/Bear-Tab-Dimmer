@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             activeTab = tabs[0];
-            if (!activeTab || activeTab.url.startsWith('chrome://')) {
+            if (!activeTab || activeTab.url.startsWith('chrome://') || activeTab.url.startsWith('https://chromewebstore.google.com/')) {
                 mainControls.remove();
                 document.getElementById('tabNotCompatible').classList.remove('hidden');
                 return;
