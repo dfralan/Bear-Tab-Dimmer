@@ -47,6 +47,8 @@ function renderPresets() {
         div.id = preset.id;
         if (prevFiltersAmount === 0) {
             div.className = "filter-circle relative pop-in";
+        } else if (prevFiltersAmount === 0) {
+            div.className = "filter-circle relative pop-in";
         } else if (presets.length > prevFiltersAmount) {
             div.className = "filter-circle relative" + (preset === presets[0] ? " pop-in" : " pop-push");
         } else {
@@ -67,7 +69,14 @@ function renderPresets() {
       </button>
     `;
         container.appendChild(div);
+        
     });
+    let newFiltersAmount = container.children.length;
+        if (newFiltersAmount === 0) {
+            document.getElementById('presetsLabel').classList.add('hidden');
+        } else {
+            document.getElementById('presetsLabel').classList.remove('hidden');
+        }
 }
 
 function guardarPresetsEnStorage() {
