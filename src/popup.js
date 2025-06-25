@@ -189,8 +189,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateControlsState() {
         if (isExtensionEnabled) {
             mainControls.classList.remove('disabled');
+            mainControls.classList.remove('grayscale');
         } else {
             mainControls.classList.add('disabled');
+            mainControls.classList.add('grayscale');
         }
     }
 
