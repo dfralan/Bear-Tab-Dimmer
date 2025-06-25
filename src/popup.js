@@ -45,7 +45,9 @@ function renderPresets() {
     presets.forEach(preset => {
         const div = document.createElement("div");
         div.id = preset.id;
-        if (presets.length > prevFiltersAmount) {
+        if (prevFiltersAmount === 0) {
+            div.className = "filter-circle relative pop-in";
+        } else if (presets.length > prevFiltersAmount) {
             div.className = "filter-circle relative" + (preset === presets[0] ? " pop-in" : " pop-push");
         } else {
             div.className = "filter-circle relative pop-pull";
