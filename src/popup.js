@@ -39,12 +39,19 @@ function generarIdUnico() {
  */
 function renderPresets() {
     const container = document.getElementById("presetsContainer");
+    let prevFiltersAmount = container.children.length;
     container.innerHTML = ""; // Limpiamos el contenedor para redibujar todo
 
     presets.forEach(preset => {
         const div = document.createElement("div");
         div.id = preset.id;
-        div.className = "filter-circle relative";
+        if (presets.length > prevFiltersAmount) {
+            div.className = "filter-circle relative" + (preset === presets[0] ? " pop-in" : " pop-push");
+        } else {
+            div.className = "filter-circle relative pop-pull";
+        }
+
+        
         div.style.backgroundColor = preset.color;
         div.setAttribute("data-opacity", preset.opacidad);
         div.setAttribute("data-color", preset.color);

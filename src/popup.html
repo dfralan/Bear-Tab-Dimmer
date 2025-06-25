@@ -11,7 +11,7 @@
 
 <body class="color-white pt-sm gap-sm" style="background-color: black;">
     <div class="flex px-sm">
-        <h1 class="text-lg">Bear Tab Dimmmer</h1>
+        <h1 class="text-lg text-center w-full pb-sm">Bear Tab Dimmmer</h1>
     </div>
 
     <!-- Interruptor Global On/Off -->
@@ -32,7 +32,7 @@
 
 
       <div class="flex flex-col gap-sm w-full px-sm">
-          <label class="pt-xs" for="favcolor">Overlay Color</label>
+          <label class="pt-xs font-semibold" for="favcolor">Overlay Color</label>
         <div id="colorPreview" class="color-button"></div>
           <div class="color-picker-popup" id="colorPopup">
             <div class="picker">
@@ -50,7 +50,7 @@
       </div>
 
       <div class="flex flex-col gap-sm w-full px-sm">
-          <label for="opacitySlider">Overlay Opacity</label>
+          <label for="opacitySlider" class="font-semibold">Overlay Opacity</label>
           <div class="flex items-end flex-col gap-xs">
               <input class="bg-black cursor-pointer rounded-full" style="height: 8px;" type="range" id="opacitySlider"
                   min="0" max="100" value="30">
@@ -60,9 +60,10 @@
       </div>
       <div class="flex flex-col gap-0 w-full">
           <div class="flex px-sm flex-row justify-between items-center w-full">
-            <label>Preset Filters</label>
-            <button id="createPreset" style="background-color: #232323;" class="rounded-full flex flex-row items-center justify-center gap-xxs ps-xs p-xxs cursor-pointer">
-              Add Preset <svg width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="white"><path d="M440-440H240q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h200v-200q0-17 11.5-28.5T480-760q17 0 28.5 11.5T520-720v200h200q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H520v200q0 17-11.5 28.5T480-200q-17 0-28.5-11.5T440-240v-200Z"/></svg>                </button>
+            <label class="font-semibold">Preset Filters</label>
+            <button id="createPreset" style="background-color: white; color: black;" class="rounded-full flex flex-row items-center justify-center gap-xxs ps-xs p-xxs cursor-pointer">
+              Save Preset <svg width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="black"><path d="M440-440H240q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h200v-200q0-17 11.5-28.5T480-760q17 0 28.5 11.5T520-720v200h200q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H520v200q0 17-11.5 28.5T480-200q-17 0-28.5-11.5T440-240v-200Z"/></svg>
+            </button>
           </div>
           <div style="overflow-x: auto; overflow-y: visible; padding-top: 5px; padding-bottom: 5px;white-space: nowrap;" id="presetsContainer" class="no-scrollbar leftFeatherMask rightFeatherMask ps-sm flex flex-row gap-xs">
               
@@ -106,10 +107,10 @@
         <div class="marquee ">
             <div class="track text-xxs">
                 <small class="text">
-                <b>⚠ Warning & Advisory</b> • This extension is recommended for use with IPS screens or similar technology. It is not a substitute for professional health advice.
+                <b>⚠ Warning & Advisory</b> • This extension is recommended for use with IPS screens or similar technology. It is not a substitute for professional health advice • Version v4.0.0.
                 </small>
                 <small class="text" aria-hidden="true">
-                <b>⚠ Warning & Advisory</b> • This extension is recommended for use with IPS screens or similar technology. It is not a substitute for professional health advice.
+                <b>⚠ Warning & Advisory</b> • This extension is recommended for use with IPS screens or similar technology. It is not a substitute for professional health advice • Version v4.0.0.
                 </small>
             </div>
         </div>
