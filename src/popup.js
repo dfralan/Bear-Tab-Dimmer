@@ -73,9 +73,9 @@ function renderPresets() {
     });
     let newFiltersAmount = container.children.length;
         if (newFiltersAmount === 0) {
-            document.getElementById('presetsLabel').classList.add('hidden');
+            document.getElementById('presetsLabel').classList.add('opacity-0');
         } else {
-            document.getElementById('presetsLabel').classList.remove('hidden');
+            document.getElementById('presetsLabel').classList.remove('opacity-0');
         }
 }
 
