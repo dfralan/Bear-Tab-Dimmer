@@ -3,7 +3,7 @@
     
         "manifest_version": 3,
         "name": "Bear Tab Dimmer",
-        "version": "4.0",
+        "version": "5.0",
         "description": "Adds a screen dimmer overlay to the current tab.",
         
       "permissions": [
