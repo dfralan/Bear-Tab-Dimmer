@@ -3,12 +3,15 @@
  * @param {number} opacity - El nivel de opacidad (0.0 a 1.0).
  * @param {string} color - El color de fondo en formato CSS (ej. 'black', '#FF0000').
  * @param {boolean} isEnabled - Indica si la superposición está habilitada o no.
- */
+ * @param {boolean} isEnabledLocally - Indica si la superposición está habilitada o no.
+
+*/
 
 // --- Estado de la Aplicación ---
 let selectedColor = 'black';
 let selectedOpacity = 0.3;
 let isExtensionEnabled = false;
+let isExtensionEnabledInTab = false; // Variable para el estado de la extensión en la pestaña actual
 
 let presets = [];
 
@@ -25,6 +28,17 @@ const defaultPresets = [
     { id: 'preset-9', opacidad: 16, color: "#B0C4DE" },
     { id: 'preset-10', opacidad: 19, color: "#191970" }
 ];
+
+//Color Ui section
+function getContrast(hexcolor){//Get contrast
+    hexcolor = hexcolor.replace(/^#/, '');
+    var r = parseInt(hexcolor.substr(0,2),16);
+    var g = parseInt(hexcolor.substr(2,2),16);
+    var b = parseInt(hexcolor.substr(4,2),16);
+    var yiq = ((r*299)+(g*587)+(b*114))/1000;
+    console.log((yiq >= 128) ? 'black' : 'white')
+    return (yiq >= 128) ? 'black' : 'white';
+}
 
 // Generar un id único
 function generarIdUnico() {
@@ -56,13 +70,15 @@ function renderPresets() {
         }
 
         
+
+        let opacityColorText = getContrast(preset.color)
         div.style.backgroundColor = preset.color;
         div.setAttribute("data-opacity", preset.opacidad);
         div.setAttribute("data-color", preset.color);
 
         div.innerHTML = `
-      <small class="percentage-text">${preset.opacidad}%</small>
-      <button data-id="${preset.id}" style="width: 10px; height: 10px;" class="removePresetButton absolute bg-tint rounded-full right-0 top-0 p-xxs">
+      <small style="color: ${opacityColorText}" class="percentage-text">${preset.opacidad}%</small>
+      <button data-id="${preset.id}" style="width: 10px; height: 10px; background-color: #ef4444" class="removePresetButton absolute rounded-full right-0 top-0 p-xxs">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="white">
           <path d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z"/>
         </svg>
@@ -108,9 +124,9 @@ function eliminarPresetPorId(id) {
 document.getElementById('createPreset').addEventListener('click', agregarNuevoPreset);
 
 
-function createOverlay(opacity, color, isEnabled) {
+function createOverlay(opacity, color, isExtensionEnabledInTab, isEnabled) {
     const alreadyDimmer = document.getElementById('dimmerOverlay');
-    const visibility = isEnabled === true ? 'visible' : 'hidden';
+    const visibility = (isEnabled === true && isExtensionEnabledInTab === true) ? 'visible' : 'hidden';
 
     if (alreadyDimmer) {
         alreadyDimmer.style.opacity = opacity;
@@ -136,6 +152,7 @@ function createOverlay(opacity, color, isEnabled) {
 document.addEventListener('DOMContentLoaded', function() {
     // --- Referencias a Elementos del DOM ---
     const globalToggle = document.getElementById('globalToggle');
+    const localToggle = document.getElementById('localToggle');
     const mainControls = document.getElementById('mainControls');
     const slider = document.getElementById('opacitySlider');
     const opacityValue = document.getElementById('opacityValue');
@@ -193,6 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const tabData = result[storageKey] || {};
                 selectedOpacity = tabData.opacity !== undefined ? tabData.opacity : 0.3;
                 selectedColor = tabData.color !== undefined ? tabData.color : 'black';
+                
+                isExtensionEnabledInTab = data.isEnabled !== false; // default a true
+                localToggle.checked = isExtensionEnabledInTab;
+                updateControlsState();
+
                 setupEventListeners();
                 updateUIFromState();
                 applyOverlayToPage();
@@ -205,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // =================================================================
 
     function updateControlsState() {
-        if (isExtensionEnabled) {
+        if (isExtensionEnabled && isExtensionEnabledInTab) {
             mainControls.classList.remove('disabled');
             mainControls.classList.remove('grayscale');
         } else {
@@ -219,7 +241,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const currentTabData = {
             opacity: selectedOpacity,
-            color: selectedColor
+            color: selectedColor,
+            isEnabled: isExtensionEnabledInTab
         };
 
         chrome.storage.local.set({ [storageKey]: currentTabData });
@@ -231,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.scripting.executeScript({
             target: { tabId: activeTab.id },
             func: createOverlay,
-            args: [selectedOpacity, selectedColor, isExtensionEnabled]
+            args: [selectedOpacity, selectedColor, isExtensionEnabledInTab, isExtensionEnabled]
         });
     }
 
@@ -239,6 +262,13 @@ document.addEventListener('DOMContentLoaded', function() {
         globalToggle.addEventListener('change', function() {
             isExtensionEnabled = this.checked;
             chrome.storage.local.set({ isExtensionEnabled: isExtensionEnabled });
+            updateControlsState();
+            applyOverlayToPage();
+        });
+        
+        localToggle.addEventListener('change', function() {
+            isExtensionEnabledInTab = this.checked;
+            chrome.storage.local.set({ [storageKey]: { opacity: selectedOpacity, color: selectedColor, isEnabled: isExtensionEnabledInTab } });
             updateControlsState();
             applyOverlayToPage();
         });

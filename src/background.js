@@ -1,8 +1,5 @@
 // background.js
 
-
-console.log('background.js script loaded');
-
 chrome.action.onClicked.addListener((tab) => {
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
@@ -13,12 +10,13 @@ chrome.action.onClicked.addListener((tab) => {
         func: function() {
             return {
                 opacity : (tabData.opacity >= 0 && tabData.opacity <= 1) ? tabData.opacity : 0.3,
-                selectedColor : tabData.color || '#000000',
+                color : tabData.color || '#000000',
+                isEnabled: tabData.isEnabled !== false // Si no está definido, se asume true
             };
         }
     }, (results) => {
-        const { opacity, selectedColor } = results[0].result;
+        const { opacity, color, isEnabled } = results[0].result;
         // Use the retrieved data here
-        chrome.storage.local.set({ [tab.id]: { opacity, color: selectedColor } });
+        chrome.storage.local.set({ [tab.id]: { opacity, color, isEnabled } });
     });
 });
